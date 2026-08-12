@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import {
   LayoutDashboard,
   ArrowLeftRight,
@@ -38,6 +39,7 @@ const BOTTOM_ITEMS = [
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname();
+  const { logout } = useAuth();
 
   return (
     <aside className={`${styles.sidebar} ${collapsed ? styles.collapsed : ''}`}>
@@ -106,6 +108,17 @@ export default function Sidebar() {
         >
           {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
           {!collapsed && <span>Collapse</span>}
+        </button>
+
+        {/* Logout */}
+        <button
+          className={styles.navItem}
+          onClick={logout}
+          title={collapsed ? 'Logout' : undefined}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', color: 'inherit' }}
+        >
+          <LogOut size={20} />
+          {!collapsed && <span>Logout</span>}
         </button>
       </div>
     </aside>
