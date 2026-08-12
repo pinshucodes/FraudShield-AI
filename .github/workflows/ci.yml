@@ -11,26 +11,6 @@ jobs:
     name: Backend Tests (FastAPI & Pytest)
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:15-alpine
-        env:
-          POSTGRES_USER: fraudshield
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: fraudshield
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-      redis:
-        image: redis:7-alpine
-        ports:
-          - 6379:6379
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -72,7 +52,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd apps/web
-          npm install --legacy-peer-deps
+          npm install
 
       - name: Run Build
         env:
