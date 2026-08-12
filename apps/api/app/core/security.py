@@ -7,6 +7,12 @@ Never store plaintext passwords — always use hash_password().
 
 from datetime import datetime, timedelta, timezone
 from typing import Any
+import bcrypt
+if not hasattr(bcrypt, "__about__"):
+    class __about__:
+        __version__ = getattr(bcrypt, "__version__", "4.0.0")
+    bcrypt.__about__ = __about__
+
 from passlib.context import CryptContext
 from jose import jwt, JWTError
 from app.core.config import settings
