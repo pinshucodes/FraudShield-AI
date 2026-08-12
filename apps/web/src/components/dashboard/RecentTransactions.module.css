@@ -1,0 +1,39 @@
+.tableCard {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-6) var(--space-6) var(--space-4);
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.riskCell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 120px;
+}
+
+.riskValue {
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  min-width: 24px;
+  color: var(--text-primary);
+}

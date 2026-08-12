@@ -1,0 +1,225 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 4px 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #94A3B8;
+  margin: 0;
+}
+
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchGroup {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px 16px;
+  flex: 1;
+  min-width: 300px;
+  transition: border-color 0.2s ease;
+}
+
+.searchGroup:focus-within {
+  border-color: #3B82F6;
+}
+
+.searchIcon {
+  color: #94A3B8;
+  margin-right: 12px;
+}
+
+.searchInput {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: #64748B;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.select {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: #E2E8F0;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+  transition: border-color 0.2s ease;
+}
+
+.select:focus {
+  border-color: #3B82F6;
+}
+
+.select option {
+  background: #0F172A;
+  color: #fff;
+}
+
+.filterBtn {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3B82F6;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.filterBtn:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.tableContainer {
+  overflow-x: auto;
+  padding: 0;
+}
+
+.rightAlign {
+  text-align: right;
+}
+
+.sortIcon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+  color: #64748B;
+  cursor: pointer;
+}
+
+.mono {
+  font-family: var(--font-mono), monospace;
+  color: #94A3B8;
+  font-size: 13px;
+}
+
+.riskCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.riskValue {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  width: 24px;
+  display: inline-block;
+}
+
+.time {
+  color: #94A3B8;
+  font-size: 13px;
+}
+
+.statusSuccess { background: rgba(16, 185, 129, 0.1); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.2); }
+.statusWarning { background: rgba(245, 158, 11, 0.1); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.2); }
+.statusDanger { background: rgba(249, 115, 22, 0.1); color: #F97316; border: 1px solid rgba(249, 115, 22, 0.2); }
+.statusCritical { background: rgba(239, 68, 68, 0.1); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+.selectedRow {
+  background: rgba(59, 130, 246, 0.05) !important;
+  border-left: 2px solid #3B82F6;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.pageInfo {
+  color: #94A3B8;
+  font-size: 14px;
+}
+
+.pageControls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pageBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #E2E8F0;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.pageBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.activePage {
+  background: #3B82F6;
+  border-color: #3B82F6;
+  color: #fff;
+}
+
+.activePage:hover:not(:disabled) {
+  background: #2563EB;
+  border-color: #2563EB;
+}
+
+.pageEllipsis {
+  color: #64748B;
+  padding: 0 4px;
+}
