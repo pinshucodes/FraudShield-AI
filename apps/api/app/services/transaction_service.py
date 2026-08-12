@@ -98,7 +98,7 @@ class TransactionService:
                 "currency": txn.currency,
                 "merchant_id": txn.merchant_id,
                 "status": txn.status.value,
-                "timestamp": txn.timestamp.isoformat() if txn.timestamp else None
+                "timestamp": txn.created_at.isoformat() if txn.created_at else None
             }
         })
         

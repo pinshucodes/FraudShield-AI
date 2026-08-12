@@ -172,3 +172,17 @@ class FraudDetectionPipeline:
             **prediction,
             "explanation": explanation,
         }
+
+
+if __name__ == "__main__":
+    import argparse
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
+    parser = argparse.ArgumentParser(description="Run FraudShield AI ML Pipeline")
+    parser.add_argument("--version", type=str, default="v1", help="Model version tag (e.g. v1, v2)")
+    parser.add_argument("--use-smote", action="store_true", help="Apply SMOTE for imbalanced class handling")
+    args = parser.parse_args()
+
+    pipeline = FraudDetectionPipeline()
+    pipeline.run(model_version=args.version, use_smote=args.use_smote)
+

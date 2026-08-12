@@ -28,7 +28,9 @@ async def setup_db():
 
 @pytest.fixture
 async def test_client():
-    async with AsyncClient(app=app, base_url="http://test") as client:
+    from httpx import ASGITransport
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
         yield client
 
 @pytest.fixture

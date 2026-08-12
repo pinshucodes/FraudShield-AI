@@ -35,7 +35,7 @@ def get_txn_service(db: AsyncSession = Depends(get_db)) -> TransactionService:
     return TransactionService(TransactionRepository(db), UserRepository(db))
 
 
-@router.post("/", response_model=APIResponse, status_code=status.HTTP_202_ACCEPTED)
+@router.post("", response_model=APIResponse, status_code=status.HTTP_202_ACCEPTED)
 async def create_transaction(
     request: TransactionCreateRequest,
     current_user: User = Depends(get_current_active_user),
@@ -56,7 +56,7 @@ async def create_transaction(
     )
 
 
-@router.get("/", response_model=TransactionListResponse)
+@router.get("", response_model=TransactionListResponse)
 async def list_transactions(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
