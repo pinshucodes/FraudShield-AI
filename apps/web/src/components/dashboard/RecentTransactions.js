@@ -1,8 +1,10 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { useWebSocket } from '@/context/WebSocketContext';
 import styles from './RecentTransactions.module.css';
 
-const TRANSACTIONS = [
+const INITIAL_TRANSACTIONS = [
   { id: 'TXN-84729103', user: 'Priya Sharma', amount: 245000, category: 'Electronics', method: 'Card', risk: 89, status: 'BLOCKED', time: '2:14 AM' },
   { id: 'TXN-39281746', user: 'Rahul Verma', amount: 18500, category: 'Travel', method: 'UPI', risk: 62, status: 'REVIEW', time: '2:12 AM' },
   { id: 'TXN-92847561', user: 'Anita Desai', amount: 4200, category: 'Groceries', method: 'Card', risk: 8, status: 'APPROVED', time: '2:10 AM' },
@@ -33,6 +35,40 @@ function formatAmount(amt) {
 }
 
 export default function RecentTransactions() {
+  const [transactions, setTransactions] = useState(INITIAL_TRANSACTIONS);
+  const { messages } = useWebSocket();
+
+  useEffect(() => {
+    if (messages && messages.length > 0) {
+      const latestMsg = messages[0];
+      if (latestMsg.type === 'NEW_TRANSACTION') {
+        const newTxn = {
+          id: latestMsg.data.transaction_id,
+          user: latestMsg.data.merchant_id || 'System User', // mock user logic
+          amount: latestMsg.data.amount,
+          category: 'Unknown',
+          method: 'Unknown',
+          risk: Math.floor(Math.random() * 100), // mock risk if not scored yet
+          status: latestMsg.data.status,
+          time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+        };
+        
+        setTransactions(prev => {
+          // Avoid duplicates in mock
+          if (prev.find(t => t.id === newTxn.id)) return prev;
+          return [newTxn, ...prev].slice(0, 8); // keep last 8
+        });
+      } else if (latestMsg.type === 'UPDATE_TRANSACTION') {
+        setTransactions(prev => prev.map(t => {
+          if (t.id === latestMsg.data.transaction_id) {
+            return { ...t, status: latestMsg.data.status };
+          }
+          return t;
+        }));
+      }
+    }
+  }, [messages]);
+
   return (
     <div className={styles.tableCard}>
       <div className={styles.header}>
@@ -54,7 +90,7 @@ export default function RecentTransactions() {
             </tr>
           </thead>
           <tbody>
-            {TRANSACTIONS.map((txn) => (
+            {transactions.map((txn) => (
               <tr key={txn.id}>
                 <td><span className="mono">{txn.id}</span></td>
                 <td style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{txn.user}</td>

@@ -83,6 +83,19 @@ services:
     networks:
       - fraudshield-network
 
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - API_URL=http://api:8000/api/v1
+    depends_on:
+      - api
+    networks:
+      - fraudshield-network
+
 volumes:
   postgres_data:
   redis_data:

@@ -13,6 +13,7 @@ from app.models.transaction import Transaction, TransactionStatus
 from app.models.risk import RiskLevel
 from app.core.exceptions import NotFoundError, ValidationError, ForbiddenError
 from app.core.logging import get_logger
+from app.services.websocket import manager
 
 logger = get_logger("transaction_service")
 
@@ -86,6 +87,21 @@ class TransactionService:
         )
 
         logger.info("transaction_created", transaction_id=transaction_id, amount=float(data.get("amount", 0)))
+        
+        # Broadcast the new transaction
+        await manager.broadcast({
+            "type": "NEW_TRANSACTION",
+            "data": {
+                "id": str(txn.id),
+                "transaction_id": txn.transaction_id,
+                "amount": float(txn.amount),
+                "currency": txn.currency,
+                "merchant_id": txn.merchant_id,
+                "status": txn.status.value,
+                "timestamp": txn.timestamp.isoformat() if txn.timestamp else None
+            }
+        })
+        
         return txn
 
     async def get_transaction(self, transaction_id: str) -> Transaction:
@@ -145,6 +161,15 @@ class TransactionService:
             new_status=new_status.value,
             analyst_id=str(analyst_id),
         )
+        
+        await manager.broadcast({
+            "type": "UPDATE_TRANSACTION",
+            "data": {
+                "transaction_id": txn.transaction_id,
+                "status": txn.status.value
+            }
+        })
+        
         return txn
 
     async def report_fraud(
