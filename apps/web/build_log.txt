@@ -1,0 +1,20 @@
+
+> web@0.1.0 build
+> next build
+
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+   ▲ Next.js 15.5.23
+
+   Creating an optimized production build ...
+Failed to compile.
+
+./src/context/AuthContext.js
+Module not found: Can't resolve '@/lib/api'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./src/app/login/page.js
+
+
+> Build failed because of webpack errors
