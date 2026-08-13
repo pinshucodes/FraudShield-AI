@@ -37,8 +37,7 @@ jobs:
           JWT_SECRET_KEY: "testsecretkey"
         run: |
           cd apps/api
-          pytest -v
-
+          pytest -v > pytest_log.txt 2>&1 || (git config --global user.name 'github-actions[bot]' && git config --global user.email 'github-actions[bot]@users.noreply.github.com' && git checkout -b ci-logs && git add pytest_log.txt && git commit -m 'Upload pytest log' && git push origin ci-logs -f && exit 1)
   frontend-check:
     name: Frontend Build & Lint (Next.js)
     runs-on: ubuntu-latest
@@ -62,4 +61,4 @@ jobs:
           NEXT_TELEMETRY_DISABLED: 1
         run: |
           cd apps/web
-          npm run build
+          npm run build > build_log.txt 2>&1 || (git config --global user.name 'github-actions[bot]' && git config --global user.email 'github-actions[bot]@users.noreply.github.com' && git checkout -b ci-logs-frontend && git add build_log.txt && git commit -m 'Upload frontend build log' && git push origin ci-logs-frontend -f && exit 1)
