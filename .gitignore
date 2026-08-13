@@ -18,7 +18,9 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# lib/ is often created by python venvs, but we use apps/web/src/lib for frontend
+/lib/
+!apps/web/src/lib/
 lib64/
 parts/
 sdist/
